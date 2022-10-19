@@ -1,7 +1,7 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	eos "github.com/qqtou/eos-go"
 )
 
 func NewSellREX(from eos.AccountName, rex eos.Asset) *eos.Action {
