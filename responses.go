@@ -351,25 +351,51 @@ type AccountResult struct {
 // PushTransactionFullResp unwraps the responses from a successful `push_transaction`.
 // FIXME: REVIEW the actual expectOutput, things have moved here.
 type PushTransactionFullResp struct {
-	StatusCode    string
 	TransactionID string               `json:"transaction_id"`
 	Processed     TransactionProcessed `json:"processed"` // WARN: is an `fc::variant` in server..
-	BlockID       string               `json:"block_id"`
-	BlockNum      uint32               `json:"block_num"`
 }
 
 type TransactionProcessed struct {
-	Status               string      `json:"status"`
-	ID                   Checksum256 `json:"id"`
-	ActionTraces         []Trace     `json:"action_traces"`
-	DeferredTransactions []string    `json:"deferred_transactions"` // that's not right... dig to find what's there..
+	ID              Checksum256 `json:"id"`
+	BlockNum        uint32      `json:"block_num"`
+	BlockTime       string      `json:"block_time"`
+	ProducerBlockID string      `json:"producer_block_id" eos:"optional"`
+	Receipt         Receipt     `json:"receipt"`
+	Elapsed         int64       `json:"elapsed"`
+	NetUsage        int         `json:"net_usage"`
+	Scheduled       bool        `json:"scheduled"`
+	ActionTraces    []Trace     `json:"action_traces"`
+	AccountRAMDelta string      `json:"account_ram_delta" eos:"optional"`
+	Except          string      `json:"except" eos:"optional"`
+	ErrorCode       string      `json:"error_code" eos:"optional"`
+}
+
+type Receipt struct {
+	Status        string `json:"status"`
+	CPUUsageUs    int    `json:"cpu_usage_us"`
+	NetUsageWords int    `json:"net_usage_words"`
 }
 
 type Trace struct {
-	Receiver AccountName `json:"receiver"`
-	// Action     Action       `json:"act"` // FIXME: how do we unpack that ? what's on the other side anyway?
-	Console    SafeString   `json:"console"`
-	DataAccess []DataAccess `json:"data_access"`
+	ActionOrdinal                          uint32             `json:"action_ordinal"`
+	CreatorActionOrdinal                   uint32             `json:"creator_action_ordinal"`
+	ClosestUnnotifiedAncestorActionOrdinal uint32             `json:"closest_unnotified_ancestor_action_ordinal"`
+	Receipt                                ActionTraceReceipt `json:"receipt,omitempty" eos:"optional"`
+	Receiver                               string             `json:"receiver"`
+	Action                                 Action             `json:"act"`
+	ContextFree                            bool               `json:"context_free"`
+	Elapsed                                int64              `json:"elapsed"`
+	Console                                string             `json:"console"`
+	TransactionID                          string             `json:"trx_id"`
+	BlockNum                               uint32             `json:"block_num"`
+	BlockTime                              string             `json:"block_time"`
+	ProducerBlockID                        string             `json:"producer_block_id" eos:"optional"`
+	AccountRAMDeltas                       []AccountRAMDelta  `json:"account_ram_deltas"`
+	Except                                 string             `json:"except,omitempty" eos:"optional"`
+	ErrorCode                              string             `json:"error_code,omitempty" eos:"optional"`
+
+	// Not present in EOSIO >= 1.8.x
+	InlineTraces []Trace `json:"inline_traces,omitempty" eos:"-"`
 }
 
 type DataAccess struct {
