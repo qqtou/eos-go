@@ -33,6 +33,16 @@ type Action struct {
 	ActionData
 }
 
+type ActTrace struct {
+	GlobalSequence Uint64      `json:"global_sequence"`
+	Receiver       AccountName `json:"receiver"`
+	Account        AccountName `json:"account"`
+	Action         ActionName  `json:"action"`
+	Authorization  []PermLevel `json:"authorization"`
+	Data           interface{} `json:"data,omitempty" eos:"-"`
+	ReturnValue    string      `json:"return_value"`
+}
+
 func (a Action) Digest() Checksum256 {
 	toEat := jsonActionToServer{
 		Account:       a.Account,

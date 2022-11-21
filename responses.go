@@ -51,6 +51,15 @@ type BlockResp struct {
 	RefBlockPrefix uint32      `json:"ref_block_prefix"`
 }
 
+type BlockTraceResp struct {
+	BlockHeader
+	ID           Checksum256 `json:"id"`
+	Number       uint32      `json:"number"`
+	PreviousId   string      `json:"previous_id"`
+	Status       string      `json:"status"`
+	Transactions []TrxTrace  `json:"transactions"`
+}
+
 type ScheduledTransactionsResp struct {
 	Transactions []ScheduledTransaction `json:"transactions"`
 	More         string                 `json:"more"`

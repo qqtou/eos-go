@@ -559,6 +559,11 @@ func (api *API) GetBlockByNum(ctx context.Context, num uint32) (out *BlockResp, 
 	return
 }
 
+func (api *API) GetBlockTraceByNum(ctx context.Context, num uint32) (out *BlockTraceResp, err error) {
+	err = api.call(ctx, "trace_api", "get_block", M{"block_num": fmt.Sprintf("%d", num)}, &out)
+	return
+}
+
 func (api *API) GetBlockByNumOrID(ctx context.Context, query string) (out *SignedBlock, err error) {
 	err = api.call(ctx, "chain", "get_block", M{"block_num_or_id": query}, &out)
 	return

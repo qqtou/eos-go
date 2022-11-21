@@ -604,6 +604,11 @@ type PermissionLevel struct {
 	Permission PermissionName `json:"permission"`
 }
 
+type PermLevel struct {
+	Account    AccountName    `json:"account"`
+	Permission PermissionName `json:"permission"`
+}
+
 // NewPermissionLevel parses strings like `account@active`,
 // `otheraccount@owner` and builds a PermissionLevel struct. It
 // validates that there is a single optional @ (where permission

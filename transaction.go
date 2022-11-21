@@ -234,6 +234,16 @@ type TransactionTrace struct {
 	ErrorCode       *Uint64           `json:"error_code,omitempty" eos:"optional"`
 }
 
+type TrxTrace struct {
+	ID                Checksum256       `json:"id"`
+	Actions           []ActTrace        `json:"actions"`
+	Status            string            `json:"status"`
+	CPUUsageMicrosec  int               `json:"cpu_usage_us"`
+	NetUsageWords     int               `json:"net_usage_words"`
+	Signatures        []ecc.Signature   `json:"signatures"`
+	TransactionHeader TransactionHeader `json:"transaction_header"`
+}
+
 type SignedTransaction struct {
 	*Transaction
 
@@ -344,6 +354,7 @@ type PackedTransaction struct {
 	Compression           CompressionType `json:"compression"` // in C++, it's an enum, not sure how it Binary-marshals..
 	PackedContextFreeData HexBytes        `json:"packed_context_free_data"`
 	PackedTransaction     HexBytes        `json:"packed_trx"`
+	Transaction           Transaction     `json:"transaction"`
 
 	wasPackedLocally bool
 }
