@@ -39,7 +39,7 @@ type ActTrace struct {
 	Account        AccountName `json:"account"`
 	Action         ActionName  `json:"action"`
 	Authorization  []PermLevel `json:"authorization"`
-	Data           interface{} `json:"data,omitempty" eos:"-"`
+	Data           HexBytes    `json:"data,omitempty"`
 	ReturnValue    string      `json:"return_value"`
 }
 
