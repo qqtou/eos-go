@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Unreleased
 
+* Added `action_trace_v1` field
+* Added `AsTime` helper functions to convert `TimePoint` and `TimePointSec` to `time.Time`
+* Added support for decoding action results
+
 #### Breaking Changes
 
 #### Added
@@ -12,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Changed
 
 #### Fixed
+
+Fix NewPrivateKey correctly working with PVT_K1 keys (#177)
 
 #### Deprecated
 
