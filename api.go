@@ -259,7 +259,7 @@ func (api *API) ABIJSONToBin(ctx context.Context, code AccountName, action Name,
 	return HexBytes(buffer), err
 }
 
-func (api *API) ABIBinToJSON(ctx context.Context, code AccountName, action Name, payload HexBytes) (out M, err error) {
+func (api *API) ABIBinToJSON(ctx context.Context, code AccountName, action Name, payload string) (out M, err error) {
 	resp := ABIBinToJSONResp{}
 	err = api.call(ctx, "chain", "abi_bin_to_json", M{"code": code, "action": action, "binargs": payload}, &resp)
 	if err != nil {
